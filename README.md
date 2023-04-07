@@ -18,4 +18,4 @@ python3 main.py
 ```
 
 ## Preview
-![index](https://raw.githubusercontent.com/MrG3P5/ReverseIP/main/WhatsApp%20Image%202023-04-02%20at%202.42.57%20PM.jpeg)
+![index](https://raw.githubusercontent.com/MrG3P5/ReverseIP/main/Screenshot_2023-04-07_14_29_00.png)
