@@ -15,6 +15,13 @@ white = Fore.WHITE
 cyan = Fore.LIGHTCYAN_EX
 yellow = Fore.LIGHTYELLOW_EX
 
+try:
+    open("res-cidr.txt", "a")
+    open("res-revip-api1.txt", "a")
+    open("res-revip-api2.txt", "a")
+except:
+    pass
+
 init(autoreset=True)
 s = requests.Session()
 
@@ -33,8 +40,6 @@ def banner():
 def domainFixer(url):
     try:
         url = url.split("://")[1].split("/")[0]
-        if ":" in url:
-            url = url.split(":")[0]
         return url
     except:
         return url
@@ -48,42 +53,60 @@ def ConvertCIDR(cidr):
         return cidr
 
 def ReverseCIDR(cidr):
-    cidr = ConvertCIDR(cidr.strip("\n\r"))
     try:
+        cidr = ConvertCIDR(cidr.strip("\n\r"))
         req = s.get(f"https://rapiddns.io/s/{cidr}?full=1#result").text
         all_domain = re.findall(r"</th>\n<td>(.*?)</td>", req)
         
         if len(all_domain) != 0:
             sys.stdout.write(f"\n{white}---> {cidr} : {green}{len(all_domain)} {white}Domain")
-            open("res-cidr.txt", "a").write("\n".join([x.replace("cpcalenders.", "").replace("www.", "").replace("cpanel.", "") for x in all_domain]))
+            
+            for x in all_domain:
+                x = x.replace("ns1.", "").replace("ns2.", "").replace("www.", "").replace("cpanel.", "").replace("autodiscover.", "").replace("whm.", "").replace("cpcontacts.", "").replace("webdisk.", "").replace("cpcalendars.", "")
+                if x in open("res-cidr.txt", "r").read():
+                    pass
+                else:
+                    open("res-cidr.txt", "a").write(x + "\n")
         else:
             sys.stdout.write(f"\n{red}---> {cidr} : BAD CIDR!!!")
     except:
         sys.stdout.write(f"\n{red}---> {cidr} : BAD CIDR!!!")
 
 def ReverseIP_API_1(ip):
-    ip = ip.strip("\n\r")
     try:
+        ip = ip.strip("\n\r")
         req = s.get(f"http://ip.yqie.com/iptodomain.aspx?ip={ip}", headers={
             "User-Agent": "User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101 Firefox/102.0",
         }).text
         all_domain = re.findall('<td width="90%" class="blue t_l" style="text-align: center">(.*?)</td>', req)[1:]
         if len(all_domain) != 0:
             sys.stdout.write(f"\n{white}---> {ip} : {green}{len(all_domain)} {white}Domain")
-            open("res-revip-api1.txt", "a").write("\n".join([x for x in all_domain]))
+            
+            for x in all_domain:
+                x = x.replace("ns1.", "").replace("ns2.", "").replace("www.", "").replace("cpanel.", "").replace("autodiscover.", "").replace("whm.", "").replace("cpcontacts.", "").replace("webdisk.", "").replace("cpcalendars.", "")
+                if x in open("res-revip-api1.txt", "r").read():
+                    pass
+                else:
+                    open("res-revip-api1.txt", "a").write(x + "\n")
         else:
             sys.stdout.write(f"\n{red}---> {ip} : BAD DOMAIN!!!")
     except:
         sys.stdout.write(f"\n{red}---> {ip} : BAD DOMAIN!!!")
 
 def ReverseIP_API_2(ip):
-    ip = ip.strip("\n\r")
     try:
+        ip = ip.strip("\n\r")
         req = s.get(f"https://rapiddns.io/sameip/{ip}?full=1#result", timeout=10).text
         all_domain = re.findall(r"</th>\n<td>(.*?)</td>", req)
         if len(all_domain) != 0:
-            open("res-revip-api2.txt", "a").write("\n".join([x for x in all_domain]))
             sys.stdout.write(f"\n{white}---> GOOD : {green}{ip} {white}({len(all_domain)} Domain)")
+            
+            for x in all_domain:
+                x = x.replace("ns1.", "").replace("ns2.", "").replace("www.", "").replace("cpanel.", "").replace("autodiscover.", "").replace("whm.", "").replace("cpcontacts.", "").replace("webdisk.", "").replace("cpcalendars.", "")
+                if x in open("res-revip-api2.txt", "r").read():
+                    pass
+                else:
+                    open("res-revip-api2.txt", "a").write(x + "\n")
         else:
             sys.stdout.write(f"\n{white}---> BAD IP : {red}{ip}")            
     except:
