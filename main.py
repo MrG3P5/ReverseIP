@@ -95,7 +95,7 @@ def ReverseIP_API_1(ip):
 
 def ReverseIP_API_2(ip):
     try:
-        ip = ip.strip("\n\r")
+        ip = socket.gethostbyname(ip.strip("\n\r"))
         req = s.get(f"https://rapiddns.io/sameip/{ip}?full=1#result", timeout=10).text
         all_domain = re.findall(r"</th>\n<td>(.*?)</td>", req)
         if len(all_domain) != 0:
