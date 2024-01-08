@@ -121,7 +121,7 @@ if __name__=="__main__":
     print(menu)
     choose = int(input(f"{red}[{white}?{red}] {white}Choose : "))
     if choose == 1:
-        input_list = open(input(f"{red}[{white}?{red}] {white}Give Me List : "), "r").readlines()
+        input_list = open(input(f"{red}[{white}?{red}] {white}Give Me List : "), "r", encoding="utf-8").readlines()
         Thread = input(f"{red}[{white}?{red}] {white}Thread : ")
         pool = ThreadPool(int(Thread))
         banner()
@@ -130,7 +130,7 @@ if __name__=="__main__":
         pool.join()
         sys.stdout.write(f"\n{cyan}[{white}-{cyan}] {white}DONE {cyan}[{white}-{cyan}]")
     elif choose == 2:
-        input_list = open(input(f"{red}[{white}?{red}] {white}Give Me List : "), "r").readlines()
+        input_list = open(input(f"{red}[{white}?{red}] {white}Give Me List : "), "r", encoding="utf-8").readlines()
         Thread = input(f"{red}[{white}?{red}] {white}Thread : ")
         pool = ThreadPool(int(Thread))
         banner()
@@ -139,7 +139,7 @@ if __name__=="__main__":
         pool.join()
         sys.stdout.write(f"\n{cyan}[{white}-{cyan}] {white}DONE {cyan}[{white}-{cyan}]")
     elif choose == 3:
-        input_list = open(input(f"{red}[{white}?{red}] {white}Give Me List : "), "r").readlines()
+        input_list = open(input(f"{red}[{white}?{red}] {white}Give Me List : "), "r", encoding="utf-8").readlines()
         Thread = input(f"{red}[{white}?{red}] {white}Thread : ")
         pool = ThreadPool(int(Thread))
         banner()
